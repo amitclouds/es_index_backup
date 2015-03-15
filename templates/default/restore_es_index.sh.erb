@@ -1,0 +1,8 @@
+echo -e "Starting restore of <%=@index%>\n"
+echo -e "Closing <%=@index%>\n"
+curl -XPOST 'localhost:9200/<%=@index%>/_close'
+echo -e "\nRestoring <%=@index%> from snapshot\n"
+curl -XPOST "localhost:9200/_snapshot/<%=@repo%>/<%=@snapshot%>/_restore"
+echo -e "\nOpening <%=@index%>\n"
+curl -XPOST 'localhost:9200/<%=@index%>/_open'
+echo -e "\n"

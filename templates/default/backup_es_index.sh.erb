@@ -1,0 +1,14 @@
+echo -e "Deleting latest snapshot....\n"
+
+curl -XDELETE "localhost:9200/_snapshot/<%=@repo%>/<%=@snapshot%>"
+
+echo -e "\nPerforming backup to <%=@index%>\n"
+
+curl -XPUT "localhost:9200/_snapshot/<%=@repo%>/<%=@snapshot%>?wait_for_completion=true" -d '{
+    "indices": "<%=@index%>",
+    "ignore_unavailable": "true",
+    "include_global_state": false
+}'
+
+echo -e "\nBackup of <%=@index%> is done\n"
+
