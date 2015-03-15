@@ -1,6 +1,11 @@
 es_index_backup Cookbook
 ========================
 Backup and restore any ElasticSearch index to and from S3.
+It will:
+1. Install AWS ElasticSearch plugin on the machine
+2. Setup a new ElasticSearch repository and snapshot for the given index
+3. Restore the index from S3 (If it was backed up before)
+4. Setup a cronjob to backup the index into S3 every hour
 
 Requirements
 ------------
