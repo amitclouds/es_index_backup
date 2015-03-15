@@ -3,7 +3,7 @@ es_index_backup Cookbook
 Backup and restore any ElasticSearch index to and from S3.
 It will:
 
-1. Install AWS ElasticSearch plugin on the machine
+1. Install [ AWS ElasticSearch plugin ](https://github.com/elastic/elasticsearch-cloud-aws) on the machine
 2. Setup a new ElasticSearch repository and snapshot for the given index
 3. Restore the index from S3 (If it was backed up before)
 4. Setup a cronjob to backup the index into S3 every hour
@@ -80,7 +80,13 @@ Attributes
 #### es_index_backup::elastic_search_aws
 You can either have a data bag "aws" with item "creds" with the following JSON:
 ```json
-{"dashboards_backup": { "key": "XXXXXXXXX", "secret": "XXXXXXXX" }}
+{
+  "dashboards_backup": 
+    {
+      "key": "XXXXXXXXX",
+      "secret": "XXXXXXXX"
+    }
+}
 ```
 Or you can set up the key and secret with the following:
 <table>
@@ -105,6 +111,9 @@ Or you can set up the key and secret with the following:
     <td>The region of that S3 bucket</td>
   </tr>
 </table>
+
+It is the same attributes used in the ElasticSearch cookbook for AWS plugin
+bootsrapping [here](https://github.com/elastic/cookbook-elasticsearch/blob/master/attributes/aws.rb)
 
 Usage
 -----
