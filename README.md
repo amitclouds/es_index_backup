@@ -1,23 +1,13 @@
 es_index_backup Cookbook
 ========================
-TODO: Enter the cookbook description here.
-
-e.g.
-This cookbook makes your favorite breakfast sandwich.
+Backup and restore any ElasticSearch index to and from S3.
 
 Requirements
 ------------
-TODO: List your cookbook requirements. Be sure to include any requirements this cookbook has on platforms, libraries, other cookbooks, packages, operating systems, etc.
-
-e.g.
-#### packages
-- `toaster` - es_index_backup needs toaster to brown your bagel.
+You will need to have ElasticSearch installed on the machine. 
 
 Attributes
 ----------
-TODO: List your cookbook attributes here.
-
-e.g.
 #### es_index_backup::default
 <table>
   <tr>
@@ -27,35 +17,98 @@ e.g.
     <th>Default</th>
   </tr>
   <tr>
-    <td><tt>['es_index_backup']['bacon']</tt></td>
-    <td>Boolean</td>
-    <td>whether to include bacon</td>
-    <td><tt>true</tt></td>
+    <td><tt>['es_index_backup']['es_host']</tt></td>
+    <td>String</td>
+    <td>host and port of es server</td>
+    <td><tt>localhost:9200</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['es_index_backup']['repository_name']</tt></td>
+    <td>String</td>
+    <td>Name of the backup repository to create</td>
+    <td><tt>repo-name</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['es_index_backup']['snapshot_name']</tt></td>
+    <td>String</td>
+    <td>Nmae of the snapshot to create</td>
+    <td><tt>snapshot-name</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['es_index_backup']['index_name']</tt></td>
+    <td>String</td>
+    <td>Name of the ES index to backup</td>
+    <td><tt>index-name</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['es_index_backup']['user']</tt></td>
+    <td>String</td>
+    <td>Name of the user to backup and restore with</td>
+    <td><tt>some-user</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['es_index_backup']['dir']</tt></td>
+    <td>String</td>
+    <td>Direcotry to install backup and restore scripts to</td>
+    <td><tt>/opt/es_index_backup</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['es_index_backup']['s3']['bucket']</tt></td>
+    <td>String</td>
+    <td>S3 bucket name to backup to</td>
+    <td><tt>s3-bucket-name</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['es_index_backup']['s3']['dir']</tt></td>
+    <td>String</td>
+    <td>Directory inside the bucket to perform backup to</td>
+    <td><tt>directory-in-s3</tt></td>
+  </tr>
+  <tr>
+    <td><tt>['es_index_backup']['s3']['region']</tt></td>
+    <td>String</td>
+    <td>Region of the above bucket</td>
+    <td><tt>us-west-2</tt></td>
+  </tr>
+</table>
+#### es_index_backup::elastic_search_aws
+You can either have a data bag "aws" with item "creds" with the following JSON:
+```json
+{"dashboards_backup": { "key": "XXXXXXXXX", "secret": "XXXXXXXX" }}
+```
+Or you can set up the key and secret with the following:
+<table>
+  <tr>
+    <th>Key</th>
+    <th>Type</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td><tt>['elasticsearch']['cloud']['aws']['access_key']</tt></td>
+    <td>String</td>
+    <td>AWS access key with permission to upload to S3</td>
+  </tr>
+  <tr>
+    <td><tt>['elasticsearch']['cloud']['aws']['secret_key']</tt></td>
+    <td>String</td>
+    <td>AWS secret key with permission to upload to S3</td>
+  </tr>
+  <tr>
+    <td><tt>['elasticsearch']['cloud']['aws']['region']</tt></td>
+    <td>String</td>
+    <td>The region of that S3 bucket</td>
   </tr>
 </table>
 
 Usage
 -----
 #### es_index_backup::default
-TODO: Write usage instructions for each cookbook.
 
-e.g.
-Just include `es_index_backup` in your node's `run_list`:
-
-```json
-{
-  "name":"my_node",
-  "run_list": [
-    "recipe[es_index_backup]"
-  ]
-}
-```
+This recipe works with a recipe that already installs ElasticSearch.
+After you have ElasticSearch installed you can just `include_recipe 'es_index_backup'`.
 
 Contributing
 ------------
-TODO: (optional) If this is a public cookbook, detail the process for contributing. If this is a private cookbook, remove this section.
-
-e.g.
 1. Fork the repository on Github
 2. Create a named feature branch (like `add_component_x`)
 3. Write your change
@@ -65,4 +118,4 @@ e.g.
 
 License and Authors
 -------------------
-Authors: TODO: List authors
+Authors: Erez Rabih

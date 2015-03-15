@@ -1,6 +1,6 @@
 include_attribute 'elasticsearch'
 
-creds = Chef::DataBagItem.load("aws", "creds")["dashboards_backup"]
+creds = Chef::DataBagItem.load("aws", "creds")["dashboards_backup"] rescue {}
 
 default.elasticsearch[:cloud][:aws][:access_key]     = creds["key"]
 default.elasticsearch[:cloud][:aws][:secret_key]     = creds["secret"]
